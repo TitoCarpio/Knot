@@ -38,6 +38,12 @@ function getCookies(): string | null {
     console.error(`The file '${cookiesFilePath}' does not exist.`);
     return null;
   }
+  // Check if the cookie file is empty
+  const stats = fs.statSync(cookiesFilePath);
+  if (stats.size === 0) {
+    console.error(`The file '${cookiesFilePath}' is empty.`);
+    return null;
+  }
 
   // Load and parse the cookie JSON file
   const cookiesJSON = fs.readFileSync(cookiesFilePath, "utf8");
@@ -154,7 +160,6 @@ async function fetchUserDataWithCookies(): Promise<void> {
         },
       }
     );
-
     // Handles the request response
     printUserData(response.data);
   } catch (error) {

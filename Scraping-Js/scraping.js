@@ -11,6 +11,13 @@ function getCookies() {
     return null;
   }
 
+  // Check if the cookie file is empty
+  const stats = fs.statSync(cookiesFilePath);
+  if (stats.size === 0) {
+    console.error(`The file '${cookiesFilePath}' is empty.`);
+    return null;
+  }
+  
   // Load and parse the cookie JSON file
   const cookiesJSON = fs.readFileSync(cookiesFilePath, "utf8");
   const cookies = JSON.parse(cookiesJSON);
@@ -106,7 +113,6 @@ async function fetchUserDataWithCookies() {
       );
       return;
     }
-
     // Making the POST request with axios that will allow me to get the user's data
     const response = await axios.post(
       "https://www.prismamoda.com/_v/private/graphql/v1?workspace=master&maxAge=long&appsEtag=remove&domain=store&locale=es-SV",
@@ -130,11 +136,9 @@ async function fetchUserDataWithCookies() {
         },
       }
     );
-
     // Handles the request response
     printUserData(response.data);
   } catch (error) {
-
     console.error("Error obtaining user data:", error);
     return null;
   }
