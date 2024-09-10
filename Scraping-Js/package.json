@@ -14,7 +14,7 @@
     "axios": "^1.7.4",
     "fs": "^0.0.1-security",
     "json": "^11.0.0",
-    "puppeteer": "^22.8.0",
+    "puppeteer": "^22.15.0",
     "random-useragent": "^0.5.0"
   }
 }
